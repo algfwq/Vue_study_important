@@ -40,6 +40,7 @@
             :label="item.title"
             :name="item.name"
           >
+            <!-- 来之不易-->
             <component :is='item.content' :objId='objId' @fatherEvent="btnclick" @delTab='delTabs'></component>
           </el-tab-pane>
         </el-tabs>
