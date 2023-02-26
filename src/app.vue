@@ -82,7 +82,7 @@ const editableTabs = ref([
 const addTabone = (targetName: string) => {
   const newTabName = `${++tabIndex}`
   editableTabs.value.push({
-    title: '新建标签页',
+    title: '新建标签页1',
     name: newTabName,
     content: test,
   })
@@ -92,7 +92,7 @@ const addTabone = (targetName: string) => {
 const addTabtwo = (targetName: string) => {
   const newTabName = `${++tabIndex}`
   editableTabs.value.push({
-    title: 'New Tab',
+    title: 'New Tab2',
     name: newTabName,
     content: test2,
   })
@@ -102,7 +102,7 @@ const addTabtwo = (targetName: string) => {
 const addTabthree = (targetName: string) => {
   const newTabName = `${++tabIndex}`
   editableTabs.value.push({
-    title: 'New Tab',
+    title: 'New Tab three',
     name: newTabName,
     content: test3,
   })
