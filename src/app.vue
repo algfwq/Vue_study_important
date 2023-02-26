@@ -1,6 +1,8 @@
 <template>
   <el-container width="100%">
-    <el-header>奥利给开发者IDE</el-header>
+    <el-header>
+      <el-button @click="toggleDark()">黑暗/阳光</el-button>
+    </el-header>
     <el-container>
       <el-aside width="18%">
           <el-menu
@@ -9,13 +11,13 @@
             @open="handleOpen"
             @close="handleClose"
           >
-            <el-menu-item index="1" @click="addTab(editableTabsValue)">
+            <el-menu-item index="1" @click="addTabone(editableTabsValue)">
               <span>Navigator One</span>
             </el-menu-item>
-            <el-menu-item index="2" @click="tab()">
+            <el-menu-item index="2" @click="addTabtwo(editableTabsValue)">
               <span>Navigator Two</span>
             </el-menu-item>
-            <el-menu-item index="3" @click="tab2()">
+            <el-menu-item index="3" @click="addTabthree(editableTabsValue)">
               <span>Navigator Three</span>
             </el-menu-item>
             <el-menu-item index="4">
@@ -56,6 +58,12 @@ import test from './test.vue'
 import test2 from './test2.vue'
 import test3 from './test3.vue'
 
+// import { ElNotification } from 'element-plus'
+import { useDark, useToggle } from '@vueuse/core'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+
 let tabIndex = 2
 const editableTabsValue = ref('2')
 const editableTabs = ref([
@@ -71,7 +79,27 @@ const editableTabs = ref([
   },
 ])
 
-const addTab = (targetName: string) => {
+const addTabone = (targetName: string) => {
+  const newTabName = `${++tabIndex}`
+  editableTabs.value.push({
+    title: '新建标签页',
+    name: newTabName,
+    content: test,
+  })
+  editableTabsValue.value = newTabName
+}
+
+const addTabtwo = (targetName: string) => {
+  const newTabName = `${++tabIndex}`
+  editableTabs.value.push({
+    title: 'New Tab',
+    name: newTabName,
+    content: test2,
+  })
+  editableTabsValue.value = newTabName
+}
+
+const addTabthree = (targetName: string) => {
   const newTabName = `${++tabIndex}`
   editableTabs.value.push({
     title: 'New Tab',
@@ -80,6 +108,8 @@ const addTab = (targetName: string) => {
   })
   editableTabsValue.value = newTabName
 }
+
+
 const removeTab = (targetName: string) => {
   const tabs = editableTabs.value
   let activeName = editableTabsValue.value
@@ -120,18 +150,8 @@ const removeTab = (targetName: string) => {
 .el-container {
   height: 100%;
 }
-.el-header,
-.el-footer {
-  background-color: #0be5a4;
-  color: #333;
+.el-header{
   text-align: center;
   line-height: 60px;
 }
-
-/*.el-main {*/
-/*  background-color: #e9eef3;*/
-/*  color: #333;*/
-/*  text-align: center;*/
-/*  line-height: 160px;*/
-/*}*/
 </style>
