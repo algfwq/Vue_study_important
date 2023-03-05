@@ -42,12 +42,11 @@
             :label="item.title"
             :name="item.name"
           >
-            <iframe v-if="item.web === 'T'" :src="item.content"  id="testFrame" name="myiframe" frameborder="0" width="100%" :height="item.hei" ></iframe>
+            <iframe v-if="item.web === 'T'" :src="item.content"  id="iframe" name="myiframe" frameborder="0" width="100%" @load="adjustIframe"></iframe>
             <component v-if="item.web === 'F'" :is='item.content' :objId='objId' @fatherEvent="btnclick" @delTab='delTabs'></component>
           </el-tab-pane>
         </el-tabs>
       </el-main>
-
     </el-container>
   </el-container>
 </template>
@@ -64,6 +63,14 @@ import { useDark, useToggle } from '@vueuse/core'
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
+function adjustIframe() {
+  var ifm = document.getElementById("iframe");
+  ifm.height = document.documentElement.clientHeight - 60 - 100;
+}
+
+window.setInterval(function logname() {
+    adjustIframe()
+}, 1);
 
 let tabIndex = 2
 const editableTabsValue = ref('2')
