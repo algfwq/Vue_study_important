@@ -8,5 +8,4 @@ import 'element-plus/dist/index.css'
 </script>
 
 <style scoped>
-
 </style>

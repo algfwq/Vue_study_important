@@ -42,8 +42,8 @@
             :label="item.title"
             :name="item.name"
           >
-            <!-- 来之不易-->
-            <component :is='item.content' :objId='objId' @fatherEvent="btnclick" @delTab='delTabs'></component>
+            <iframe v-if="item.web === 'T'" :src="item.content"  id="testFrame" name="myiframe" frameborder="0" width="100%" :height="item.hei" ></iframe>
+            <component v-if="item.web === 'F'" :is='item.content' :objId='objId' @fatherEvent="btnclick" @delTab='delTabs'></component>
           </el-tab-pane>
         </el-tabs>
       </el-main>
@@ -64,18 +64,23 @@ import { useDark, useToggle } from '@vueuse/core'
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
+
 let tabIndex = 2
 const editableTabsValue = ref('2')
 const editableTabs = ref([
   {
     title: 'Tab 1',
     name: '1',
-    content: test,
+    web:"T",
+    content: "https://cloud.tencent.com/developer/ask/sof/1154665",
+    hei:document.documentElement.clientHeight - 60 - 80+ 'px',
   },
   {
     title: 'Tab 2',
     name: '2',
+    web:"F",
     content: test2,
+    hei:document.documentElement.clientHeight - 60 - 80+ 'px'
   },
 ])
 
@@ -85,6 +90,8 @@ const addTabone = (targetName: string) => {
     title: '新建标签页1',
     name: newTabName,
     content: test,
+    web:"F",
+    hei:document.documentElement.clientHeight - 60 - 80+ 'px'
   })
   editableTabsValue.value = newTabName
 }
@@ -94,7 +101,9 @@ const addTabtwo = (targetName: string) => {
   editableTabs.value.push({
     title: 'New Tab2',
     name: newTabName,
-    content: test2,
+    content: "https://cloud.tencent.com/developer/ask/sof/1154665",
+    web:"T",
+    hei:document.documentElement.clientHeight - 60 - 80+ 'px'
   })
   editableTabsValue.value = newTabName
 }
@@ -105,6 +114,8 @@ const addTabthree = (targetName: string) => {
     title: 'New Tab three',
     name: newTabName,
     content: test3,
+    web:"F",
+    hei:document.documentElement.clientHeight - 60 - 80+ 'px'
   })
   editableTabsValue.value = newTabName
 }
