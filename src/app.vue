@@ -42,7 +42,7 @@
             :label="item.title"
             :name="item.name"
           >
-            <iframe v-if="item.web === 'T'" :src="item.content"  id="iframe" name="myiframe" frameborder="0" width="100%" @load="adjustIframe"></iframe>
+            <iframe v-if="item.web === 'T'" :src="item.content"  :id="item.id" name="myiframe" frameborder="0" width="100%" @load="adjustIframe"></iframe>
             <component v-if="item.web === 'F'" :is='item.content' :objId='objId' @fatherEvent="btnclick" @delTab='delTabs'></component>
           </el-tab-pane>
         </el-tabs>
@@ -63,14 +63,18 @@ import { useDark, useToggle } from '@vueuse/core'
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
-function adjustIframe() {
-  var ifm = document.getElementById("iframe");
-  ifm.height = document.documentElement.clientHeight - 60 - 100;
-}
+let iframenumber = ref(0)
+function autoiframe(id){
+  function adjustIframe(id) {
+    var ifm = document.getElementById(id);
+    ifm.height = document.documentElement.clientHeight - 60 - 100;
+  }
 
-window.setInterval(function logname() {
-    adjustIframe()
-}, 1);
+  window.setInterval(function logname() {
+      adjustIframe(id)
+  }, 1);
+}
+autoiframe("iframe")
 
 let tabIndex = 2
 const editableTabsValue = ref('2')
@@ -80,14 +84,14 @@ const editableTabs = ref([
     name: '1',
     web:"T",
     content: "https://cloud.tencent.com/developer/ask/sof/1154665",
-    hei:document.documentElement.clientHeight - 60 - 80+ 'px',
+    id:"iframe"
   },
   {
     title: 'Tab 2',
     name: '2',
     web:"F",
     content: test2,
-    hei:document.documentElement.clientHeight - 60 - 80+ 'px'
+    id:"iframe"
   },
 ])
 
@@ -98,33 +102,37 @@ const addTabone = (targetName: string) => {
     name: newTabName,
     content: test,
     web:"F",
-    hei:document.documentElement.clientHeight - 60 - 80+ 'px'
+    id:"iframe"
   })
   editableTabsValue.value = newTabName
 }
 
 const addTabtwo = (targetName: string) => {
+  iframenumber.value = iframenumber.value + 1
   const newTabName = `${++tabIndex}`
   editableTabs.value.push({
     title: 'New Tab2',
     name: newTabName,
     content: "https://cloud.tencent.com/developer/ask/sof/1154665",
     web:"T",
-    hei:document.documentElement.clientHeight - 60 - 80+ 'px'
+    id:"iframe" + iframenumber.value
   })
   editableTabsValue.value = newTabName
+  autoiframe("iframe" + iframenumber.value)
 }
 
 const addTabthree = (targetName: string) => {
+  iframenumber.value = iframenumber.value + 1
   const newTabName = `${++tabIndex}`
   editableTabs.value.push({
     title: 'New Tab three',
     name: newTabName,
-    content: test3,
-    web:"F",
-    hei:document.documentElement.clientHeight - 60 - 80+ 'px'
+    content: "https://code.xueersi.com/",
+    web:"T",
+    id:"iframe" + iframenumber.value
   })
   editableTabsValue.value = newTabName
+  autoiframe("iframe" + iframenumber.value)
 }
 
 
